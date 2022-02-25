@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="title"></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
+    <script>
+        var copyAndDownloadDisabled = false;
+    function unfade(element) {
+        var op = 0.2;  // initial opacity
+        element.style.display = 'block';
+        var timer = setInterval(function () {
+            if (op >= 1){
+                clearInterval(timer);
+            }
+            element.style.opacity = op;
+            element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+            op += op * 0.1;
+        }, 10);
+    }
+    function findGetParameter(parameterName) {
+            var result = null,
+                tmp = [];
+            location.search
+                .substr(1)
+                .split("&")
+                .forEach(function (item) {
+                tmp = item.split("=");
+                if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+                });
+            return result;
+        }
+        function showCopiedNotify()
+        {
+            if (!copyAndDownloadDisabled)
+            {
+                navigator.clipboard.writeText(window.location);
+                unfade(document.getElementById("notify"));
+                document.getElementById("notify").animate([
+                // keyframes
+                { opacity: "0.0" },
+                { opacity: "1.0" }
+                ], {
+                // timing options
+                duration: 500,
+                iterations: 1
+                });
+
+                setTimeout(() => {
+                    document.getElementById("notify").animate([
+                    // keyframes
+                    { opacity: "1.0" },
+                    { opacity: "0.0" }
+                    ], {
+                    // timing options
+                    duration: 1000,
+                    iterations: 1
+                    });
+
+                    document.getElementById("notify").animate([
+                    // keyframes
+                    { transform: 'translateY(0px)' },
+                    { transform: 'translateY(-100px)' }
+                    ], {
+                    // timing options
+                    duration: 1000,
+                    iterations: 1
+                    });
+                    setTimeout(() => {
+                        document.getElementById("notify").style.transform = "translateY(0px)";
+                        document.getElementById("notify").style.opacity = "0.0";
+                    }, 990);
+                }, 1000);
+            }
+        }
+        function disableDownloadAndCopyButtons()
+        {
+            copyAndDownloadDisabled = true;
+            /*
+            <div id="downlaod-btn">
+                POBIERZ PLIK
+            </div>
+
+            remove download link and restore the button itself
+            */
+            let _parent_div_buffor = document.getElementById("download-link").parentElement
+            _parent_div_buffor.childNodes[1].remove()
+            let _buffor_dir = document.createElement("div");
+            _buffor_dir.id = "download-btn";
+            _buffor_dir.innerText = "POBIERZ PLIK"
+            _parent_div_buffor.appendChild(_buffor_dir)
+
+
+            document.getElementById("download-btn").style.backgroundColor = "#464a52";
+            document.getElementById("copy-btn").style.backgroundColor = "#464a52";
+
+            document.getElementById("download-btn").style.color = "#d6d6d6";
+            document.getElementById("copy-btn").style.color = "#d6d6d6";
+
+            document.getElementById("download-btn").style.textDecoration = "line-through";
+            document.getElementById("copy-btn").style.textDecoration = "line-through";
+        }
+    </script>
+    <script>
+    //const server_adress = "http://152.70.55.33/";
+    const server_adress = "http://localhost/";
+    const filename = findGetParameter("filename");
+    const full_file_path = encodeURI(server_adress + "/public/" + filename);
+    let filetype = "";// office or image or video or audio or raw_text
+    var table_files_to_ignore= ["index.html"];
+
+    /*PDF), PowerPoint (POTM, POTX, PPSM, PPSX, PPT, PPTM, PPTX), Rich Text (RTF), Word (DOC, DOCM, DOCX, DOTM, DOTX*/
+    var table_filetypes_office = ["docx","doc", "docm", "xlsx", "xls", "xlsm", "pptx","ppt", "pptm", "pps", "ppsx", "pdf","rtf"];
+    var table_filetypes_image = ["png", "apng",  "jpg", "jpeg", "gif", "svg", "webp", "bmp", "ico"];
+    var table_filetypes_video = ["ogg", "webm", "mp4"];
+    var table_filetypes_audio = ["mp3", "wav"];
+    
+    if (table_files_to_ignore.includes(filename) || filename == null)
+    {
+        filetype = "nonexistant";
+    }
+    else if (table_filetypes_office.includes(filename.split(".").pop()))
+    {
+        filetype = "office";
+    }
+    else if (table_filetypes_image.includes(filename.split(".").pop()))
+    {
+        filetype = "image";
+    }
+    else if (table_filetypes_video.includes(filename.split(".").pop()))
+    {
+        filetype = "video";
+    }
+    else if (table_filetypes_audio.includes(filename.split(".").pop()))
+    {
+        filetype = "audio";
+    }
+    else // RAW FILE 
+    {
+        filetype = "raw"
+    }
+    function load(){
+        if (filetype == "office")
+        { 
+            // Tworzy ramkę, z odniesieniem do ms office online i wyswietla je jako iframe
+            let iframe_podglad = document.createElement("iframe");
+            iframe_podglad.frameBorder = "no";
+            iframe_podglad.id = "podglad_office";
+            iframe_podglad.src = "https://view.officeapps.live.com/op/embed.aspx?src=" + full_file_path;
+            let paragraph_error_message = document.createElement("p")
+            paragraph_error_message.innerText = "Ta przeglądarka nie obsługuje podglądu, możesz dalej pobać plik.";
+            iframe_podglad.appendChild(paragraph_error_message);
+            document.getElementsByTagName("section")[0].appendChild(iframe_podglad);
+        }
+        else if (filetype == "image")
+        {
+            // Tworzy obrazek i wyswietla go
+            let image_podglad = document.createElement("img");
+            image_podglad.src = full_file_path;
+            image_podglad.alt = filename;
+            image_podglad.id = "podglad_img";
+            document.getElementsByTagName("section")[0].appendChild(image_podglad);
+        } 
+        else if (filetype == "video")
+        {
+            // Tworzy ramke wideo i wyswietla ją
+            /*
+            <video width="320" height="240" controls>
+            <source src="movie.mp4" type="video/mp4">
+            <source src="movie.ogg" type="video/ogg">
+            Your browser does not support the video tag.
+            </video>
+            */
+            let video_podglad = document.createElement("video");
+            let video_source = document.createElement("source");
+            video_source.src = full_file_path;
+            video_podglad.controls = true;
+            video_podglad.id = "podglad_video";
+            video_podglad.innerText = "Twoja przegladarka nie obsługuje odtwarzania tego filmu, możesz go dalej pobrać";
+            video_podglad.appendChild(video_source);
+            document.getElementsByTagName("section")[0].appendChild(video_podglad);
+        }
+        else if (filetype == "audio")
+        {
+            // Tworzy kontrolkę audio i wyswietla ją
+            /*
+            <audio controls>
+            <source src="horse.ogg" type="audio/ogg">
+            <source src="horse.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+            </audio>
+            */
+            let audio_podglad = document.createElement("audio");
+            let audio_source = document.createElement("source");
+            audio_source.src = full_file_path;
+            audio_podglad.controls = true;
+            audio_podglad.id = "podglad_audio";
+            audio_podglad.innerText = "Twoja przegladarka nie obsługuje odtwarzania pliku audio, możesz go dalej pobrać";
+            audio_podglad.appendChild(audio_source);
+            document.getElementsByTagName("section")[0].appendChild(audio_podglad);
+        }
+        else if (filetype == "raw")
+        { // Tworzymiejsce na surowe dane i wyswietla je
+            let raw_podglad = document.createElement("xmp");
+            fetch(full_file_path)
+            .then(response => {
+                if(response.ok)
+                {
+                    raw_podglad.innerText = response.text()
+                }
+                else 
+                {    
+                    disableDownloadAndCopyButtons();
+                }
+            })
+            .catch(error => {
+                console.log("error", error);
+            });
+            document.getElementsByTagName("html")[0].style.overflow = "auto";
+            document.getElementsByTagName("section")[0].style.overflow = "auto";
+            raw_podglad.id = "podglad_raw";
+            document.getElementsByTagName("section")[0].appendChild(raw_podglad);
+        }
+        else 
+        {
+            // error message nie ma pliku
+            let error_text = document.createElement("span");
+            error_text.id = "podglad_raw";
+            error_text.style.color = "#d21212";
+            error_text.style.fontSize = "x-large"
+            error_text.innerText = "Plik ''" + filename + "'' nie istnieje, lub nie jest dostępny."
+            document.getElementsByTagName("section")[0].appendChild(error_text);
+            disableDownloadAndCopyButtons();
+        }
+        document.getElementById("download-link").href = "/public/" + filename;
+        document.getElementById("download-link").download =  filename;
+        document.getElementById("copy-btn").addEventListener("click", showCopiedNotify);
+    }
+    if (document.addEventListener) 
+    {
+        document.addEventListener('contextmenu', (e) => {
+            if (document.elementsFromPoint(e.pageX, e.pageY)[1].nodeName == "SECTION")
+            {
+                showCopiedNotify();
+            }
+            e.preventDefault();
+        }, false);
+    } else 
+    {
+    document.attachEvent('oncontextmenu', function() {
+        alert("You've tried to open context menu");
+        window.event.returnValue = false;
+    });
+    }
+    document.getElementById("title").innerText = filename;
+
+    console.log("Plik = ", filename);
+    console.log("Typ: =", filetype);
+   </script>
+   <style>
+    #podglad_office {
+        width:100%;
+        height:97%;
+    }
+    body, html, section {
+        height: 100%;
+        margin:0px;
+        overflow: hidden;
+    }
+    #podglad_img, #podglad_audio, #podglad_video, #podglad_raw {
+    max-width: 100%;
+    max-height: 70%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    }
+    #podglad_raw {
+        padding: 3%;
+        margin: 3%;
+        margin-top: 8%;
+    }
+    #header {
+        background-color: cornflowerblue;
+        padding: 10px;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .div-inline {
+        padding-right: 30px;
+    }
+    #download-btn, #copy-btn {
+        font-size: larger;
+        font-family: 'Lato', sans-serif;
+        background-color: rgb(45, 82, 151);
+        width:max-content;
+        color:white;
+        font-weight:bolder;
+        margin:0px;
+        padding: 10%;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+    #download-btn:hover, #copy-btn:hover {
+        background-color: rgb(27, 51, 95)
+    }
+    a {
+        text-decoration:none;
+    }
+    #notify {
+        position:fixed;
+        top:1%;
+        left:70%;
+        background-color: rgb(27, 51, 95);
+        opacity: 0;
+        color: aliceblue;
+        padding: 2%;
+        border-radius: 10px;
+        font-size: larger;
+        font-family: 'Lato', sans-serif;
+        font-weight: bolder;
+        border: 3px;
+        border-color: rgb(27, 51, 95);
+    }
+   </style>
+</head>
+<body onload="load()">
+    <header>
+        <div id="notify">
+            Link skopiowany :)
+        </div>
+        <div id="header">
+            <div class="div-inline">
+                <a id="download-link" href="placeholder" title="Pobierz plik na urządzenie" download="">
+                    <div id="download-btn">
+                        POBIERZ PLIK
+                    </div>
+                </a>
+            </div>
+            <div class="div-inline">
+                <div id="copy-btn" title="Skopiuj link do schowka">
+                    KOPIUJ LINK
+                </div>
+            </div>
+        </div>
+    </header>
+    <section>
+    </section>
+</body>
+</html>
+
