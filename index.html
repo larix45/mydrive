@@ -103,6 +103,9 @@
 
             document.getElementById("download-btn").style.textDecoration = "line-through";
             document.getElementById("copy-btn").style.textDecoration = "line-through";
+
+            document.getElementById("download-btn").style.cursor = "not-allowed";
+            document.getElementById("copy-btn").style.cursor = "not-allowed";
         }
     </script>
     <script>
@@ -251,8 +254,8 @@
         }, false);
     } else 
     {
-    document.attachEvent('oncontextmenu', function() {
-        alert("You've tried to open context menu");
+    document.attachEvent('oncontextmenu', () => {
+        showCopiedNotify();
         window.event.returnValue = false;
     });
     }
@@ -272,14 +275,14 @@
         overflow: hidden;
     }
     #podglad_img, #podglad_audio, #podglad_video, #podglad_raw {
-    max-width: 100%;
-    max-height: 70%;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
+        max-width: 100%;
+        max-height: 70%;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
     }
     #podglad_raw {
         padding: 3%;
