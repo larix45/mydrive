@@ -33,14 +33,27 @@
                 let div_element = document.createElement("div");
                 div_element.classList.add("element");
                 
+
+
+                var table_filetypes = ["docx","doc", "docm", "xlsx", "xls", "xlsm", "pptx","ppt", "pptm", "pps",
+                     "ppsx", "pdf","rtf", "png", "apng",  "jpg", "jpeg", "gif", "svg", "webp", "bmp", "ico", "ogg", "webm",
+                      "mp4", "mp3", "wav"];
+                
+
+
                 let img_fileicon = document.createElement("img");
-                img_fileicon.src = "./mydrive-icons/512px/_blank.png";
                 img_fileicon.classList.add("fileicon");
+                img_fileicon.src = "./mydrive-icons/512px/_blank.png";
+                if(table_filetypes.includes(element.split(".").pop()))
+                {
+                    img_fileicon.src = "./mydrive-icons/512px/"+element.split(".").pop()+".png";
+                }
 
                 let span_filename = document.createElement("span");
                 span_filename.classList.add("filename");
                 span_filename.innerText = element;
 
+                
                 /**
                  * TODO:
                  * fileicons depending on file extension
