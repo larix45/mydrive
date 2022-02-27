@@ -16,16 +16,21 @@
                 return ele != value; 
             });
         }
+        function rescaleAccordingToWindowSize() {
+            //console.log(parseInt(window.innerWidth/100));
+            let columns = "";
+            for(let i =1; i < parseInt(window.innerWidth/100)+1; i++)
+            {
+                columns += (100/parseInt(window.innerWidth/100))+"% ";
+            }
+            console.log(columns);
+            document.getElementsByTagName("section")[0].style.gridTemplateColumns = columns;
+        }
+
+        window.onresize = rescaleAccordingToWindowSize;
         function load()
         {
-            /*
-            <a href="asd.png">
-                <div class="element">
-                    <img class="fileicon" src="./mydrive-icons/512px/_blank.png"></img>
-                    <span class="filename">Plik.txt</span>
-                </div>
-            </a>
-            */
+            rescaleAccordingToWindowSize();
             console.log(JSON.parse(document.getElementById("files").value));
             arrayRemove( arrayRemove(JSON.parse(document.getElementById("files").value),"."), "..").forEach(element => {
                 let a_link = document.createElement("a");
@@ -51,47 +56,47 @@
                 let img_fileicon = document.createElement("img");
                 img_fileicon.classList.add("fileicon");
                 img_fileicon.src = "./mydrive-icons/icons/base.png";
-                if(table_filetypes_office_docs.includes(element.split(".").pop()))
+                if(table_filetypes_office_docs.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/word.png";
                 }
-                else if(table_filetypes_office_sheets.includes(element.split(".").pop()))
+                else if(table_filetypes_office_sheets.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/excel.png";
                 }
-                else if(table_filetypes_office_slides.includes(element.split(".").pop()))
+                else if(table_filetypes_office_slides.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/powerpoint.png";
                 }
-                else if(table_filetypes_image.includes(element.split(".").pop()))
+                else if(table_filetypes_image.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/image.png";
                 }
-                else if(table_filetypes_video.includes(element.split(".").pop()))
+                else if(table_filetypes_video.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/video.png";
                 }
-                else if(table_filetypes_audio.includes(element.split(".").pop()))
+                else if(table_filetypes_audio.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/music.png";
                 }
-                else if(table_filetypes_text.includes(element.split(".").pop()))
+                else if(table_filetypes_text.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/text.png";
                 }
-                else if(table_filetypes_icons.includes(element.split(".").pop()))
+                else if(table_filetypes_icons.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/svg.png";
                 }
-                else if(table_filetypes_execuatbles.includes(element.split(".").pop()))
+                else if(table_filetypes_execuatbles.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/exec.png";
                 }
-                else if("pdf" == element.split(".").pop())
+                else if("pdf" == element.split(".").pop().toLowerCase())
                 {
                     img_fileicon.src = "./mydrive-icons/icons/pdf.png";
                 }
-                else if(table_filetypes_code.includes(element.split(".").pop()))
+                else if(table_filetypes_code.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/base.png";
                 }
@@ -100,11 +105,6 @@
                 span_filename.classList.add("filename");
                 span_filename.innerText = element;
 
-                
-                /**
-                 * TODO:
-                 * fileicons depending on file extension
-                 **/
                 div_element.appendChild(img_fileicon);
 
                 div_element.appendChild(span_filename);

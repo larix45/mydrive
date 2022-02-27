@@ -9,7 +9,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
     <script>
-        var copyAndDownloadDisabled = false;
+    var copyAndDownloadDisabled = false;
+    function rescaleAccordingToWindowSize() {
+        if(window.innerHeight < window.innerWidth)
+        {
+            document.getElementById("download-btn").innerHTML = " POBIERZ PLIK";
+            document.getElementById("copy-btn").innerHTML = "KOPIUJ LINK";
+        }
+        else 
+        {
+            document.getElementById("download-btn").innerHTML = "<img src='./mydrive-icons/icons/download.png'  class='icon'>";
+            document.getElementById("copy-btn").innerHTML = "<img src='./mydrive-icons/icons/copy.png'  class='icon'>";
+        }
+            //console.log(parseInt(window.innerWidth/100));
+    }
     function unfade(element) {
         var op = 0.2;  // initial opacity
         element.style.display = 'block';
@@ -121,26 +134,30 @@
     var table_filetypes_image = ["png", "apng",  "jpg", "jpeg", "gif", "svg", "webp", "bmp", "ico"];
     var table_filetypes_video = ["ogg", "webm", "mp4"];
     var table_filetypes_audio = ["mp3", "wav"];
-    
+    var table_filetypes_not_viewable = ["exe", "dll", "msi", "run", "inf", "bin", "iso", "img"];
     if (table_files_to_ignore.includes(filename) || filename == null)
     {
         filetype = "nonexistant";
     }
-    else if (table_filetypes_office.includes(filename.split(".").pop()))
+    else if (table_filetypes_office.includes(filename.split(".").pop().toLowerCase()))
     {
         filetype = "office";
     }
-    else if (table_filetypes_image.includes(filename.split(".").pop()))
+    else if (table_filetypes_image.includes(filename.split(".").pop().toLowerCase()))
     {
         filetype = "image";
     }
-    else if (table_filetypes_video.includes(filename.split(".").pop()))
+    else if (table_filetypes_video.includes(filename.split(".").pop().toLowerCase()))
     {
         filetype = "video";
     }
-    else if (table_filetypes_audio.includes(filename.split(".").pop()))
+    else if (table_filetypes_audio.includes(filename.split(".").pop().toLowerCase()))
     {
         filetype = "audio";
+    }
+    else if (table_filetypes_not_viewable.includes(filename.split(".").pop().toLowerCase()))
+    {
+        filetype = "not_viewable";
     }
     else // RAW FILE 
     {
@@ -206,6 +223,16 @@
             audio_podglad.appendChild(audio_source);
             document.getElementsByTagName("section")[0].appendChild(audio_podglad);
         }
+        else if (filetype == "not_viewable")
+        {
+            // error message nie ma pliku
+            let info_text = document.createElement("span");
+            info_text.id = "podglad_raw";
+            info_text.style.color = "#151515";
+            info_text.style.fontSize = "x-large"
+            info_text.innerText = "Nie można wyświetlić podglądu dla pliku: " + filename + ", możesz go dalej pobrać"
+            document.getElementsByTagName("section")[0].appendChild(info_text);
+        }
         else if (filetype == "raw")
         { // Tworzymiejsce na surowe dane i wyswietla je
             let raw_podglad = document.createElement("xmp");
@@ -242,7 +269,9 @@
         document.getElementById("download-link").href = "/public/" + filename;
         document.getElementById("download-link").download =  filename;
         document.getElementById("copy-btn").addEventListener("click", showCopiedNotify);
+        rescaleAccordingToWindowSize();
     }
+
     if (document.addEventListener) 
     {
         document.addEventListener('contextmenu', (e) => {
@@ -260,9 +289,12 @@
     });
     }
     document.getElementById("title").innerText = filename;
+    window.onresize = rescaleAccordingToWindowSize;
+
 
     console.log("Plik = ", filename);
-    console.log("Typ: =", filetype);
+    console.log("Typ wyświetlania = ", filetype);
+    console.log("Rozszerzenie = ", filename.split(".").pop().toLowerCase());
    </script>
    <style>
     #podglad_office {
@@ -333,6 +365,10 @@
         border: 3px;
         border-color: rgb(27, 51, 95);
     }
+    .icon {
+        max-height:  64px;
+        max-width: auto;
+    }
    </style>
 </head>
 <body onload="load()">
@@ -344,13 +380,11 @@
             <div class="div-inline">
                 <a id="download-link" href="placeholder" title="Pobierz plik na urządzenie" download="">
                     <div id="download-btn">
-                        POBIERZ PLIK
                     </div>
                 </a>
             </div>
             <div class="div-inline">
                 <div id="copy-btn" title="Skopiuj link do schowka">
-                    KOPIUJ LINK
                 </div>
             </div>
         </div>
