@@ -40,21 +40,15 @@
                 
 
 
-                var table_filetypes_office_docs = ["docx","doc", "docm"];
-                var table_filetypes_office_sheets = ["xlsx", "xls", "xlsm"];
-                var table_filetypes_office_slides = ["pptx","ppt", "pptm", "pps", "ppsx"];
-                var table_filetypes_image = ["png", "apng",  "jpg", "jpeg", "gif", "webp", "bmp"];
-                var table_filetypes_video = ["ogg", "webm", "mp4"];
-                var table_filetypes_audio = ["mp3", "wav"];
-                var table_filetypes_text = ["txt","md", "rtf", "csv"];
-                var table_filetypes_icons = ["ico", "svg"];
-                var table_filetypes_execuatbles = ["exe", "dll", "msi", "run", "inf"];
-                var table_filetypes_code = ["cpp"]; //TODO
+                var table_filetypes = ["docx","doc", "docm", "xlsx", "xls", "xlsm", "pptx","ppt", "pptm", "pps",
+                     "ppsx", "pdf","rtf", "png", "apng",  "jpg", "jpeg", "gif", "svg", "webp", "bmp", "ico", "ogg", "webm",
+                      "mp4", "mp3", "wav"];
                 
 
 
                 let img_fileicon = document.createElement("img");
                 img_fileicon.classList.add("fileicon");
+<<<<<<< HEAD
                 img_fileicon.src = "./mydrive-icons/icons/base.png";
                 if(table_filetypes_office_docs.includes(element.split(".").pop().toLowerCase()))
                 {
@@ -99,6 +93,12 @@
                 else if(table_filetypes_code.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/base.png";
+=======
+                img_fileicon.src = "./mydrive-icons/512px/_blank.png";
+                if(table_filetypes.includes(element.split(".").pop()))
+                {
+                    img_fileicon.src = "./mydrive-icons/512px/"+element.split(".").pop()+".png";
+>>>>>>> parent of 31559d3 (Finished new icons + icons display working)
                 }
 
                 let span_filename = document.createElement("span");
