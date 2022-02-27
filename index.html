@@ -9,12 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
     <script>
-        var settings = { 
-            "color":"",
-            "theme":"dark"
-        };
-    </script>
-    <script>
     var copyAndDownloadDisabled = false;
     function rescaleAccordingToWindowSize() {
         if(window.innerHeight < window.innerWidth)
@@ -24,8 +18,8 @@
         }
         else 
         {
-            document.getElementById("download-btn").innerHTML = "<img src='./mydrive-icons/icons/light/download.png'  class='icon'>";
-            document.getElementById("copy-btn").innerHTML = "<img src='./mydrive-icons/icons/light/copy.png'  class='icon'>";
+            document.getElementById("download-btn").innerHTML = "<img src='./mydrive-icons/icons/download.png'  class='icon'>";
+            document.getElementById("copy-btn").innerHTML = "<img src='./mydrive-icons/icons/copy.png'  class='icon'>";
         }
             //console.log(parseInt(window.innerWidth/100));
     }
@@ -133,7 +127,9 @@
     const filename = findGetParameter("filename");
     const full_file_path = encodeURI(server_adress + "/public/" + filename);
     let filetype = "";// office or image or video or audio or raw_text
-    var table_files_to_ignore= ["index.html"];
+
+
+    var table_files_to_ignore= ["index.html"]; 
 
     /*PDF), PowerPoint (POTM, POTX, PPSM, PPSX, PPT, PPTM, PPTX), Rich Text (RTF), Word (DOC, DOCM, DOCX, DOTM, DOTX*/
     var table_filetypes_office = ["docx","doc", "docm", "xlsx", "xls", "xlsm", "pptx","ppt", "pptm", "pps", "ppsx", "pdf","rtf"];
@@ -141,7 +137,11 @@
     var table_filetypes_video = ["ogg", "webm", "mp4"];
     var table_filetypes_audio = ["mp3", "wav"];
     var table_filetypes_not_viewable = ["exe", "dll", "msi", "run", "inf", "bin", "iso", "img"];
-    if (table_files_to_ignore.includes(filename) || filename == null)
+    if(filename == null)
+    {
+        window.location.replace(server_adress+"choose-file.php");
+    }
+    else if (table_files_to_ignore.includes(filename))
     {
         filetype = "nonexistant";
     }
@@ -303,6 +303,11 @@
     console.log("Rozszerzenie = ", filename.split(".").pop().toLowerCase());
    </script>
    <style>
+    :root {
+        --main-color: cornflowerblue;
+        --button-color: rgb(45, 82, 151);
+        --accent-color: rgb(27, 51, 95);
+    }
     #podglad_office {
         width:100%;
         height:97%;
@@ -328,7 +333,7 @@
         margin-top: 8%;
     }
     #header {
-        background-color: cornflowerblue;
+        background-color: var(--main-color);
         padding: 10px;
         display: flex;
         flex-wrap: nowrap;
@@ -341,7 +346,7 @@
     #download-btn, #copy-btn {
         font-size: larger;
         font-family: 'Lato', sans-serif;
-        background-color: rgb(45, 82, 151);
+        background-color: var(--button-color);
         width:max-content;
         color:white;
         font-weight:bolder;
@@ -351,7 +356,7 @@
         cursor: pointer;
     }
     #download-btn:hover, #copy-btn:hover {
-        background-color: rgb(27, 51, 95)
+        background-color: var(--accent-color);
     }
     a {
         text-decoration:none;
@@ -360,16 +365,14 @@
         position:fixed;
         top:1%;
         left:70%;
-        background-color: rgb(27, 51, 95);
+        background-color: var(--accent-color);
         opacity: 0;
-        color: aliceblue;
+        color: white;
         padding: 2%;
         border-radius: 10px;
         font-size: larger;
         font-family: 'Lato', sans-serif;
         font-weight: bolder;
-        border: 3px;
-        border-color: rgb(27, 51, 95);
     }
     .icon {
         max-height:  64px;

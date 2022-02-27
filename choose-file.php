@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,15 +40,21 @@
                 
 
 
-                var table_filetypes = ["docx","doc", "docm", "xlsx", "xls", "xlsm", "pptx","ppt", "pptm", "pps",
-                     "ppsx", "pdf","rtf", "png", "apng",  "jpg", "jpeg", "gif", "svg", "webp", "bmp", "ico", "ogg", "webm",
-                      "mp4", "mp3", "wav"];
+                var table_filetypes_office_docs = ["docx","doc", "docm"];
+                var table_filetypes_office_sheets = ["xlsx", "xls", "xlsm"];
+                var table_filetypes_office_slides = ["pptx","ppt", "pptm", "pps", "ppsx"];
+                var table_filetypes_image = ["png", "apng",  "jpg", "jpeg", "gif", "webp", "bmp"];
+                var table_filetypes_video = ["ogg", "webm", "mp4"];
+                var table_filetypes_audio = ["mp3", "wav"];
+                var table_filetypes_text = ["txt","md", "rtf", "csv"];
+                var table_filetypes_icons = ["ico", "svg"];
+                var table_filetypes_execuatbles = ["exe", "dll", "msi", "run", "inf"];
+                var table_filetypes_code = ["cpp"]; //TODO
                 
 
 
                 let img_fileicon = document.createElement("img");
                 img_fileicon.classList.add("fileicon");
-<<<<<<< HEAD
                 img_fileicon.src = "./mydrive-icons/icons/base.png";
                 if(table_filetypes_office_docs.includes(element.split(".").pop().toLowerCase()))
                 {
@@ -93,12 +99,6 @@
                 else if(table_filetypes_code.includes(element.split(".").pop().toLowerCase()))
                 {
                     img_fileicon.src = "./mydrive-icons/icons/base.png";
-=======
-                img_fileicon.src = "./mydrive-icons/512px/_blank.png";
-                if(table_filetypes.includes(element.split(".").pop()))
-                {
-                    img_fileicon.src = "./mydrive-icons/512px/"+element.split(".").pop()+".png";
->>>>>>> parent of 31559d3 (Finished new icons + icons display working)
                 }
 
                 let span_filename = document.createElement("span");
@@ -117,24 +117,20 @@
         }
     </script>
     <style>
-       /*
-        @media (max-width: 1199px) { ... }
-
-        @media (max-width: 991px) { ... }
-
-        @media (max-width: 575px) { ... }*/
+    :root {
+        --main-color: cornflowerblue;
+    }
     body, html, section {
         margin:0px; 
         height: 100%;
     }
     section {
         display: grid;
-	    grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
 	    grid-auto-rows: 25%;
         margin:1%;
     }
     #header {
-        background-color: cornflowerblue;
+        background-color: var(--main-color);
         padding: 10px;
         display: flex;
         flex-wrap: nowrap;
@@ -162,7 +158,7 @@
         padding-top:7%;
     }
     .element:hover {
-        box-shadow: 0 0 5px 3px cornflowerblue;
+        box-shadow: 0 0 5px 3px var(--main-color);
     }
     #text {
         font-size: xx-large;
