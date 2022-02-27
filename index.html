@@ -9,6 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
     <script>
+        var settings = { 
+            "color":"",
+            "theme":"dark"
+        };
+    </script>
+    <script>
     var copyAndDownloadDisabled = false;
     function rescaleAccordingToWindowSize() {
         if(window.innerHeight < window.innerWidth)
@@ -18,8 +24,8 @@
         }
         else 
         {
-            document.getElementById("download-btn").innerHTML = "<img src='./mydrive-icons/icons/download.png'  class='icon'>";
-            document.getElementById("copy-btn").innerHTML = "<img src='./mydrive-icons/icons/copy.png'  class='icon'>";
+            document.getElementById("download-btn").innerHTML = "<img src='./mydrive-icons/icons/light/download.png'  class='icon'>";
+            document.getElementById("copy-btn").innerHTML = "<img src='./mydrive-icons/icons/light/copy.png'  class='icon'>";
         }
             //console.log(parseInt(window.innerWidth/100));
     }
