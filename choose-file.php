@@ -35,18 +35,65 @@
                 
 
 
-                var table_filetypes = ["docx","doc", "docm", "xlsx", "xls", "xlsm", "pptx","ppt", "pptm", "pps",
-                     "ppsx", "pdf","rtf", "png", "apng",  "jpg", "jpeg", "gif", "svg", "webp", "bmp", "ico", "ogg", "webm",
-                      "mp4", "mp3", "wav"];
+                var table_filetypes_office_docs = ["docx","doc", "docm"];
+                var table_filetypes_office_sheets = ["xlsx", "xls", "xlsm"];
+                var table_filetypes_office_slides = ["pptx","ppt", "pptm", "pps", "ppsx"];
+                var table_filetypes_image = ["png", "apng",  "jpg", "jpeg", "gif", "webp", "bmp"];
+                var table_filetypes_video = ["ogg", "webm", "mp4"];
+                var table_filetypes_audio = ["mp3", "wav"];
+                var table_filetypes_text = ["txt","md", "rtf", "csv"];
+                var table_filetypes_icons = ["ico", "svg"];
+                var table_filetypes_execuatbles = ["exe", "dll", "msi", "run", "inf"];
+                var table_filetypes_code = ["cpp"]; //TODO
                 
 
 
                 let img_fileicon = document.createElement("img");
                 img_fileicon.classList.add("fileicon");
-                img_fileicon.src = "./mydrive-icons/512px/_blank.png";
-                if(table_filetypes.includes(element.split(".").pop()))
+                img_fileicon.src = "./mydrive-icons/icons/base.png";
+                if(table_filetypes_office_docs.includes(element.split(".").pop()))
                 {
-                    img_fileicon.src = "./mydrive-icons/512px/"+element.split(".").pop()+".png";
+                    img_fileicon.src = "./mydrive-icons/icons/word.png";
+                }
+                else if(table_filetypes_office_sheets.includes(element.split(".").pop()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/excel.png";
+                }
+                else if(table_filetypes_office_slides.includes(element.split(".").pop()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/powerpoint.png";
+                }
+                else if(table_filetypes_image.includes(element.split(".").pop()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/image.png";
+                }
+                else if(table_filetypes_video.includes(element.split(".").pop()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/video.png";
+                }
+                else if(table_filetypes_audio.includes(element.split(".").pop()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/music.png";
+                }
+                else if(table_filetypes_text.includes(element.split(".").pop()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/text.png";
+                }
+                else if(table_filetypes_icons.includes(element.split(".").pop()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/svg.png";
+                }
+                else if(table_filetypes_execuatbles.includes(element.split(".").pop()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/exec.png";
+                }
+                else if("pdf" == element.split(".").pop())
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/pdf.png";
+                }
+                else if(table_filetypes_code.includes(element.split(".").pop()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/base.png";
                 }
 
                 let span_filename = document.createElement("span");
