@@ -11,20 +11,36 @@
     <script>
     var copyAndDownloadDisabled = false;
     function rescaleAccordingToWindowSize() {
-        if(window.innerHeight < window.innerWidth)
+        if(filename == null)
         {
-            document.getElementById("download-btn").innerHTML = " POBIERZ PLIK";
-            document.getElementById("copy-btn").innerHTML = "KOPIUJ LINK";
+            let columns = "";
+            for(let i =1; i < parseInt(window.innerWidth/100)+1; i++)
+            {
+                columns += (100/parseInt(window.innerWidth/100))+"% ";
+            }
+            document.getElementsByTagName("section")[0].style.gridTemplateColumns = columns;
         }
-        else 
+        else
         {
-            document.getElementById("download-btn").innerHTML = "<img src='./mydrive-icons/icons/download.png'  class='icon'>";
-            document.getElementById("copy-btn").innerHTML = "<img src='./mydrive-icons/icons/copy.png'  class='icon'>";
+            if(window.innerHeight < window.innerWidth)
+            {
+                document.getElementById("download-btn").innerHTML = " POBIERZ PLIK";
+                document.getElementById("copy-btn").innerHTML = "KOPIUJ LINK";
+            }
+            else 
+            {
+                document.getElementById("download-btn").innerHTML = "<img src='./mydrive-icons/icons/download.png'  class='icon'>";
+                document.getElementById("copy-btn").innerHTML = "<img src='./mydrive-icons/icons/copy.png'  class='icon'>";
+            }
         }
-            //console.log(parseInt(window.innerWidth/100));
+    }
+    function arrayRemove(arr, value) { 
+            return arr.filter(function(ele){ 
+                return ele != value; 
+            });
     }
     function unfade(element) {
-        var op = 0.2;  // initial opacity
+        let op = 0.2;  
         element.style.display = 'block';
         var timer = setInterval(function () {
             if (op >= 1){
@@ -47,8 +63,7 @@
                 });
             return result;
         }
-        function showCopiedNotify()
-        {
+    function showCopiedNotify() {
             if (!copyAndDownloadDisabled)
             {
                 navigator.clipboard.writeText(window.location);
@@ -90,8 +105,7 @@
                 }, 1000);
             }
         }
-        function disableDownloadAndCopyButtons()
-        {
+    function disableDownloadAndCopyButtons() {
             copyAndDownloadDisabled = true;
             /*
             <div id="downlaod-btn">
@@ -137,9 +151,12 @@
     var table_filetypes_video = ["ogg", "webm", "mp4"];
     var table_filetypes_audio = ["mp3", "wav"];
     var table_filetypes_not_viewable = ["exe", "dll", "msi", "run", "inf", "bin", "iso", "img"];
+    window.onresize = rescaleAccordingToWindowSize;
+    document.getElementById("title").innerText = filename;
+
+
     if(filename == null)
     {
-        window.location.replace(server_adress+"choose-file.php");
     }
     else if (table_files_to_ignore.includes(filename))
     {
@@ -170,6 +187,97 @@
         filetype = "raw"
     }
     function load(){
+        rescaleAccordingToWindowSize();
+        if(filename == null)
+        {
+            document.getElementById("header").innerHTML = "<h1 id='text'>Wybierz plik:</h1>";
+            document.getElementById("header").style.justifyContent = "center";
+            document.getElementsByTagName("section")[0].style.overflow = "auto";
+            document.getElementsByTagName("section")[0].style.display = "grid"
+            document.getElementsByTagName("section")[0].style.gridAutoRows = "25%";
+            document.getElementsByTagName("section")[0].style.margin = "1%";
+            console.log(JSON.parse(document.getElementById("files").value));
+            arrayRemove( arrayRemove(JSON.parse(document.getElementById("files").value),"."), "..").forEach(element => {
+                let a_link = document.createElement("a");
+                a_link.href = server_adress+"?filename="+element;
+                let div_element = document.createElement("div");
+                div_element.classList.add("element");
+
+                var table_filetypes_office_docs = ["docx","doc", "docm"];
+                var table_filetypes_office_sheets = ["xlsx", "xls", "xlsm"];
+                var table_filetypes_office_slides = ["pptx","ppt", "pptm", "pps", "ppsx"];
+                var table_filetypes_image = ["png", "apng",  "jpg", "jpeg", "gif", "webp", "bmp"];
+                var table_filetypes_video = ["ogg", "webm", "mp4"];
+                var table_filetypes_audio = ["mp3", "wav"];
+                var table_filetypes_text = ["txt","md", "rtf", "csv"];
+                var table_filetypes_icons = ["ico", "svg"];
+                var table_filetypes_execuatbles = ["exe", "dll", "msi", "run", "inf"];
+                var table_filetypes_code = ["cpp"]; //TODO
+                
+
+
+                let img_fileicon = document.createElement("img");
+                img_fileicon.classList.add("fileicon");
+                img_fileicon.src = "./mydrive-icons/icons/base.png";
+                if(table_filetypes_office_docs.includes(element.split(".").pop().toLowerCase()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/word.png";
+                }
+                else if(table_filetypes_office_sheets.includes(element.split(".").pop().toLowerCase()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/excel.png";
+                }
+                else if(table_filetypes_office_slides.includes(element.split(".").pop().toLowerCase()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/powerpoint.png";
+                }
+                else if(table_filetypes_image.includes(element.split(".").pop().toLowerCase()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/image.png";
+                }
+                else if(table_filetypes_video.includes(element.split(".").pop().toLowerCase()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/video.png";
+                }
+                else if(table_filetypes_audio.includes(element.split(".").pop().toLowerCase()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/music.png";
+                }
+                else if(table_filetypes_text.includes(element.split(".").pop().toLowerCase()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/text.png";
+                }
+                else if(table_filetypes_icons.includes(element.split(".").pop().toLowerCase()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/svg.png";
+                }
+                else if(table_filetypes_execuatbles.includes(element.split(".").pop().toLowerCase()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/exec.png";
+                }
+                else if("pdf" == element.split(".").pop().toLowerCase())
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/pdf.png";
+                }
+                else if(table_filetypes_code.includes(element.split(".").pop().toLowerCase()))
+                {
+                    img_fileicon.src = "./mydrive-icons/icons/base.png";
+                }
+
+                let span_filename = document.createElement("span");
+                span_filename.classList.add("filename");
+                span_filename.innerText = element;
+
+                div_element.appendChild(img_fileicon);
+
+                div_element.appendChild(span_filename);
+
+                a_link.appendChild(div_element);
+                console.log(element);
+                document.getElementsByTagName("section")[0].appendChild(a_link);
+            });
+        }
+        else {
         if (filetype == "office")
         { 
             // Tworzy ramkę, z odniesieniem do ms office online i wyswietla je jako iframe
@@ -275,27 +383,24 @@
         document.getElementById("download-link").href = "/public/" + filename;
         document.getElementById("download-link").download =  filename;
         document.getElementById("copy-btn").addEventListener("click", showCopiedNotify);
-        rescaleAccordingToWindowSize();
+        if (document.addEventListener) 
+        {
+            document.addEventListener('contextmenu', (e) => {
+                if (document.elementsFromPoint(e.pageX, e.pageY)[1].nodeName == "SECTION")
+                {
+                    showCopiedNotify();
+                }
+                e.preventDefault();
+            }, false);
+        } else 
+        {
+        document.attachEvent('oncontextmenu', () => {
+            showCopiedNotify();
+            window.event.returnValue = false;
+        });
+        }
     }
-
-    if (document.addEventListener) 
-    {
-        document.addEventListener('contextmenu', (e) => {
-            if (document.elementsFromPoint(e.pageX, e.pageY)[1].nodeName == "SECTION")
-            {
-                showCopiedNotify();
-            }
-            e.preventDefault();
-        }, false);
-    } else 
-    {
-    document.attachEvent('oncontextmenu', () => {
-        showCopiedNotify();
-        window.event.returnValue = false;
-    });
-    }
-    document.getElementById("title").innerText = filename;
-    window.onresize = rescaleAccordingToWindowSize;
+}
 
 
     console.log("Plik = ", filename);
@@ -303,6 +408,7 @@
     console.log("Rozszerzenie = ", filename.split(".").pop().toLowerCase());
    </script>
    <style>
+
     :root {
         --main-color: cornflowerblue;
         --button-color: rgb(45, 82, 151);
@@ -340,6 +446,7 @@
         flex-direction: row;
         justify-content: space-between;
     }
+
     .div-inline {
         padding-right: 30px;
     }
@@ -378,6 +485,38 @@
         max-height:  64px;
         max-width: auto;
     }
+    .fileicon{
+        max-width:80%;
+        height:auto;
+    }
+    .filename{
+        font-size: large;
+        font-family: 'Lato', sans-serif;
+        font-weight:bolder;
+        text-align:center;
+        width:100%;
+        color:black;
+        word-wrap: break-word;
+    }
+    .element {
+        margin:6%;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        padding-top:7%;
+    }
+    .element:hover {
+        box-shadow: 0 0 5px 3px var(--main-color);
+    }
+    #text {
+        font-size: xx-large;
+        font-family: 'Lato', sans-serif;
+        width:max-content;
+        color:white;
+        font-weight:bolder;
+        margin:0px;
+        padding: 1%;
+    }
    </style>
 </head>
 <body onload="load()">
@@ -400,6 +539,9 @@
     </header>
     <section>
     </section>
+    <?php
+    echo "<input type='hidden' id='files' value='".json_encode(array_values(scandir("./public")))."'>";
+    ?>
 </body>
 </html>
 
