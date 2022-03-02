@@ -9,421 +9,297 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
     <script>
-    var copyAndDownloadDisabled = false;
-    function rescaleAccordingToWindowSize() {
-        if(filename == null)
+    /*const p = "http://152.70.55.33/";*/
+    const p = "http://localhost/";
+    var m = false;
+    function l() {
+        if(r == null)
         {
-            let columns = "";
+            let _a = "";
             for(let i =1; i < parseInt(window.innerWidth/100)+1; i++)
-            {
-                columns += (100/parseInt(window.innerWidth/100))+"% ";
-            }
-            document.getElementsByTagName("section")[0].style.gridTemplateColumns = columns;
+                _a += (100/parseInt(window.innerWidth/100))+"% ";
+            document.getElementsByTagName("section")[0].style.gridTemplateColumns = _a;
         }
         else
         {
             if(window.innerHeight < window.innerWidth)
             {
-                document.getElementById("download-btn").innerHTML = " POBIERZ PLIK";
-                document.getElementById("copy-btn").innerHTML = "KOPIUJ LINK";
-            }
+                document.getElementById("a").innerHTML = " POBIERZ PLIK";
+                document.getElementById("b").innerHTML = "KOPIUJ LINK";
+             }
             else 
             {
-                document.getElementById("download-btn").innerHTML = "<img src='./mydrive-icons/icons/download.png'  class='icon'>";
-                document.getElementById("copy-btn").innerHTML = "<img src='./mydrive-icons/icons/copy.png'  class='icon'>";
+                document.getElementById("a").innerHTML = "<img src='./res/download.png'  class='p'>";
+                document.getElementById("b").innerHTML = "<img src='./res/copy.png'  class='p'>";
             }
         }
+        document.getElementsByTagName("section")[0].style.height = document.getElementsByTagName('html')[0].offsetHeight - document.getElementsByTagName('header')[0].offsetHeight + "px";
     }
-    function arrayRemove(arr, value) { 
-            return arr.filter(function(ele){ 
-                return ele != value; 
+    function o(_a, _b) { 
+            return _a.filter((_c) =>{ 
+                return _c != _b; 
             });
     }
-    function unfade(element) {
-        let op = 0.2;  
-        element.style.display = 'block';
-        var timer = setInterval(function () {
-            if (op >= 1){
-                clearInterval(timer);
+    function w(_b) {
+        _b.style.display = 'block';
+        let _a = 0.2, _c = setInterval(() => {
+            if (_a >= 1){
+                clearInterval(_c);
             }
-            element.style.opacity = op;
-            element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-            op += op * 0.1;
+            _b.style.opacity = _a;
+            _b.style.filter = 'alpha(opacity=' + _a * 100 + ")";
+            _a += _a * 0.1;
         }, 10);
     }
-    function findGetParameter(parameterName) {
-            var result = null,
-                tmp = [];
-            location.search
-                .substr(1)
-                .split("&")
-                .forEach(function (item) {
-                tmp = item.split("=");
-                if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    function v(_a) {
+            let _b = null, _c = [];
+            location.search.substr(1).split("&").forEach(function (_d) {
+                _c = _d.split("=");
+                if (_c[0] === _a) _b = decodeURIComponent(_c[1]);
                 });
-            return result;
+            return _b;
         }
-    function showCopiedNotify() {
-            if (!copyAndDownloadDisabled)
+    function u() {
+            if (!m)
             {
                 navigator.clipboard.writeText(window.location);
-                unfade(document.getElementById("notify"));
-                document.getElementById("notify").animate([
-                // keyframes
+                w(document.getElementById("f"));
+                document.getElementById("f").animate([
                 { opacity: "0.0" },
                 { opacity: "1.0" }
                 ], {
-                // timing options
                 duration: 500,
                 iterations: 1
                 });
 
                 setTimeout(() => {
-                    document.getElementById("notify").animate([
-                    // keyframes
+                    document.getElementById("f").animate([
                     { opacity: "1.0" },
                     { opacity: "0.0" }
                     ], {
-                    // timing options
                     duration: 1000,
                     iterations: 1
                     });
 
-                    document.getElementById("notify").animate([
-                    // keyframes
+                    document.getElementById("f").animate([
                     { transform: 'translateY(0px)' },
                     { transform: 'translateY(-100px)' }
                     ], {
-                    // timing options
                     duration: 1000,
                     iterations: 1
                     });
                     setTimeout(() => {
-                        document.getElementById("notify").style.transform = "translateY(0px)";
-                        document.getElementById("notify").style.opacity = "0.0";
+                        document.getElementById("f").style.transform = "translateY(0px)";
+                        document.getElementById("f").style.opacity = "0.0";
                     }, 990);
                 }, 1000);
             }
         }
-    function disableDownloadAndCopyButtons() {
-            copyAndDownloadDisabled = true;
-            /*
-            <div id="downlaod-btn">
-                POBIERZ PLIK
-            </div>
-
-            remove download link and restore the button itself
-            */
-            let _parent_div_buffor = document.getElementById("download-link").parentElement
-            _parent_div_buffor.childNodes[1].remove()
-            let _buffor_dir = document.createElement("div");
-            _buffor_dir.id = "download-btn";
-            _buffor_dir.innerText = "POBIERZ PLIK"
-            _parent_div_buffor.appendChild(_buffor_dir)
-
-
-            document.getElementById("download-btn").style.backgroundColor = "#464a52";
-            document.getElementById("copy-btn").style.backgroundColor = "#464a52";
-
-            document.getElementById("download-btn").style.color = "#d6d6d6";
-            document.getElementById("copy-btn").style.color = "#d6d6d6";
-
-            document.getElementById("download-btn").style.textDecoration = "line-through";
-            document.getElementById("copy-btn").style.textDecoration = "line-through";
-
-            document.getElementById("download-btn").style.cursor = "not-allowed";
-            document.getElementById("copy-btn").style.cursor = "not-allowed";
+    function n() {
+            m = true;
+            let _a = document.getElementById("d").parentElement, _b = document.createElement("div");
+            _a.childNodes[1].remove();
+            _b.id = "a";
+            _b.innerText = "POBIERZ PLIK";
+            _b.style.backgroundColor = "#464a52";
+            document.getElementById("b").style.backgroundColor = "#464a52";
+            _b.style.color = "#d6d6d6";
+            document.getElementById("b").style.color = "#d6d6d6";
+            _b.style.textDecoration = "line-through";
+            document.getElementById("b").style.textDecoration = "line-through";
+            _b.style.cursor = "not-allowed";
+            document.getElementById("b").style.cursor = "not-allowed";
+            _a.appendChild(_b)
         }
-    </script>
-    <script>
-    //const server_adress = "http://152.70.55.33/";
-    const server_adress = "http://localhost/";
-    const filename = findGetParameter("filename");
-    const full_file_path = encodeURI(server_adress + "/public/" + filename);
-    let filetype = "";// office or image or video or audio or raw_text
-
-
-    var table_files_to_ignore= ["index.html"]; 
-
-    /*PDF), PowerPoint (POTM, POTX, PPSM, PPSX, PPT, PPTM, PPTX), Rich Text (RTF), Word (DOC, DOCM, DOCX, DOTM, DOTX*/
-    var table_filetypes_office = ["docx","doc", "docm", "xlsx", "xls", "xlsm", "pptx","ppt", "pptm", "pps", "ppsx", "pdf","rtf"];
-    var table_filetypes_image = ["png", "apng",  "jpg", "jpeg", "gif", "svg", "webp", "bmp", "ico"];
-    var table_filetypes_video = ["ogg", "webm", "mp4"];
-    var table_filetypes_audio = ["mp3", "wav"];
-    var table_filetypes_not_viewable = ["exe", "dll", "msi", "run", "inf", "bin", "iso", "img"];
-    window.onresize = rescaleAccordingToWindowSize;
-    document.getElementById("title").innerText = filename;
-
-
-    if(filename == null)
-    {
-    }
-    else if (table_files_to_ignore.includes(filename))
-    {
-        filetype = "nonexistant";
-    }
-    else if (table_filetypes_office.includes(filename.split(".").pop().toLowerCase()))
-    {
-        filetype = "office";
-    }
-    else if (table_filetypes_image.includes(filename.split(".").pop().toLowerCase()))
-    {
-        filetype = "image";
-    }
-    else if (table_filetypes_video.includes(filename.split(".").pop().toLowerCase()))
-    {
-        filetype = "video";
-    }
-    else if (table_filetypes_audio.includes(filename.split(".").pop().toLowerCase()))
-    {
-        filetype = "audio";
-    }
-    else if (table_filetypes_not_viewable.includes(filename.split(".").pop().toLowerCase()))
-    {
-        filetype = "not_viewable";
-    }
-    else // RAW FILE 
-    {
-        filetype = "raw"
-    }
-    function load(){
-        rescaleAccordingToWindowSize();
-        if(filename == null)
+    const r = v("filename");
+    const t = encodeURI(p + "/public/" + r);
+    let s = "";
+    var a= ["index.html"];
+    var b = ["docx","doc", "docm"];
+    var c = ["xlsx", "xls", "xlsm"];
+    var d = ["pptx","ppt", "pptm", "pps", "ppsx"];
+    var e = ["png", "apng",  "jpg", "jpeg", "gif", "webp", "bmp"];
+    var f = ["ico", "svg"];
+    var g = ["ogg", "webm", "mp4"];
+    var h = ["mp3", "wav"];
+    var i = ["txt","md", "rtf", "csv"];
+    var j = ["exe", "dll", "msi", "run", "inf"];
+    var k = ["exe", "dll", "msi", "run", "inf", "bin", "iso", "img"];
+    document.getElementById("title").innerText = r;
+    if(r == "null") { }
+    else if (a.includes(r))
+        s = "nonexistant";
+    else if (b.concat(c.concat(d)).includes(r.split(".").pop().toLowerCase()))
+        s = "office";
+    else if (e.concat(f).includes(r.split(".").pop().toLowerCase()))
+        s = "image";
+    else if (g.includes(r.split(".").pop().toLowerCase()))
+        s = "video";
+    else if (h.includes(r.split(".").pop().toLowerCase()))
+        s = "audio";
+    else if (k.includes(r.split(".").pop().toLowerCase()))
+        s = "not_viewable";
+    else if (r.split(".").pop().toLowerCase() == "pdf")
+        s = "pdf";
+    else
+        s = "raw"
+    function q(){
+        if(r == null)
         {
-            document.getElementById("header").innerHTML = "<h1 id='text'>Wybierz plik:</h1>";
-            document.getElementById("header").style.justifyContent = "center";
+            document.getElementById("e").innerHTML = "<h1 id='r'>Wybierz plik:</h1>";
+            document.getElementById("e").style.justifyContent = "center";
             document.getElementsByTagName("section")[0].style.overflow = "auto";
             document.getElementsByTagName("section")[0].style.display = "grid"
             document.getElementsByTagName("section")[0].style.gridAutoRows = "25%";
-            document.getElementsByTagName("section")[0].style.margin = "1%";
-            console.log(JSON.parse(document.getElementById("files").value));
-            arrayRemove( arrayRemove(JSON.parse(document.getElementById("files").value),"."), "..").forEach(element => {
-                let a_link = document.createElement("a");
-                a_link.href = server_adress+"?filename="+element;
-                let div_element = document.createElement("div");
-                div_element.classList.add("element");
-
-                var table_filetypes_office_docs = ["docx","doc", "docm"];
-                var table_filetypes_office_sheets = ["xlsx", "xls", "xlsm"];
-                var table_filetypes_office_slides = ["pptx","ppt", "pptm", "pps", "ppsx"];
-                var table_filetypes_image = ["png", "apng",  "jpg", "jpeg", "gif", "webp", "bmp"];
-                var table_filetypes_video = ["ogg", "webm", "mp4"];
-                var table_filetypes_audio = ["mp3", "wav"];
-                var table_filetypes_text = ["txt","md", "rtf", "csv"];
-                var table_filetypes_icons = ["ico", "svg"];
-                var table_filetypes_execuatbles = ["exe", "dll", "msi", "run", "inf"];
-                var table_filetypes_code = ["cpp"]; //TODO
-                
-
-
-                let img_fileicon = document.createElement("img");
-                img_fileicon.classList.add("fileicon");
-                img_fileicon.src = "./mydrive-icons/icons/base.png";
-                if(table_filetypes_office_docs.includes(element.split(".").pop().toLowerCase()))
-                {
-                    img_fileicon.src = "./mydrive-icons/icons/word.png";
-                }
-                else if(table_filetypes_office_sheets.includes(element.split(".").pop().toLowerCase()))
-                {
-                    img_fileicon.src = "./mydrive-icons/icons/excel.png";
-                }
-                else if(table_filetypes_office_slides.includes(element.split(".").pop().toLowerCase()))
-                {
-                    img_fileicon.src = "./mydrive-icons/icons/powerpoint.png";
-                }
-                else if(table_filetypes_image.includes(element.split(".").pop().toLowerCase()))
-                {
-                    img_fileicon.src = "./mydrive-icons/icons/image.png";
-                }
-                else if(table_filetypes_video.includes(element.split(".").pop().toLowerCase()))
-                {
-                    img_fileicon.src = "./mydrive-icons/icons/video.png";
-                }
-                else if(table_filetypes_audio.includes(element.split(".").pop().toLowerCase()))
-                {
-                    img_fileicon.src = "./mydrive-icons/icons/music.png";
-                }
-                else if(table_filetypes_text.includes(element.split(".").pop().toLowerCase()))
-                {
-                    img_fileicon.src = "./mydrive-icons/icons/text.png";
-                }
-                else if(table_filetypes_icons.includes(element.split(".").pop().toLowerCase()))
-                {
-                    img_fileicon.src = "./mydrive-icons/icons/svg.png";
-                }
-                else if(table_filetypes_execuatbles.includes(element.split(".").pop().toLowerCase()))
-                {
-                    img_fileicon.src = "./mydrive-icons/icons/exec.png";
-                }
-                else if("pdf" == element.split(".").pop().toLowerCase())
-                {
-                    img_fileicon.src = "./mydrive-icons/icons/pdf.png";
-                }
-                else if(table_filetypes_code.includes(element.split(".").pop().toLowerCase()))
-                {
-                    img_fileicon.src = "./mydrive-icons/icons/base.png";
-                }
-
-                let span_filename = document.createElement("span");
-                span_filename.classList.add("filename");
-                span_filename.innerText = element;
-
-                div_element.appendChild(img_fileicon);
-
-                div_element.appendChild(span_filename);
-
-                a_link.appendChild(div_element);
-                console.log(element);
-                document.getElementsByTagName("section")[0].appendChild(a_link);
+            document.getElementsByTagName("section")[0].style.padding= "1%";
+            o( o(JSON.parse(document.getElementById("files").value),"."), "..").forEach(_d => 
+            {
+                let _a = document.createElement("a");
+                _a.href = p+"?filename="+_d;
+                let _b = document.createElement("div");
+                _b.classList.add("g");
+                let _c = document.createElement("img");
+                _c.classList.add("n");
+                _c.src = "./res/base.png";
+                if(b.includes(_d.split(".").pop().toLowerCase()))
+                    _c.src = "./res/word.png";
+                else if(c.includes(_d.split(".").pop().toLowerCase()))
+                    _c.src = "./res/excel.png";
+                else if(d.includes(_d.split(".").pop().toLowerCase()))
+                    _c.src = "./res/powerpoint.png";
+                else if(e.includes(_d.split(".").pop().toLowerCase()))
+                    _c.src = "./res/image.png";
+                else if(g.includes(_d.split(".").pop().toLowerCase()))
+                    _c.src = "./res/video.png";
+                else if(h.includes(_d.split(".").pop().toLowerCase()))
+                    _c.src = "./res/music.png";
+                else if(i.includes(_d.split(".").pop().toLowerCase()))
+                    _c.src = "./res/text.png";
+                else if(f.includes(_d.split(".").pop().toLowerCase()))
+                    _c.src = "./res/svg.png";
+                else if(j.includes(_d.split(".").pop().toLowerCase()))
+                    _c.src = "./res/exec.png";
+                else if("pdf" == _d.split(".").pop().toLowerCase())
+                    _c.src = "./res/pdf.png";
+                let _e = document.createElement("span");
+                _e.classList.add("o");
+                _e.innerText = _d;
+                _b.appendChild(_c);
+                _b.appendChild(_e);
+                _a.appendChild(_b);
+                document.getElementsByTagName("section")[0].appendChild(_a);
             });
-        }
-        else {
-        if (filetype == "office")
-        { 
-            // Tworzy ramkę, z odniesieniem do ms office online i wyswietla je jako iframe
-            let iframe_podglad = document.createElement("iframe");
-            iframe_podglad.frameBorder = "no";
-            iframe_podglad.id = "podglad_office";
-            iframe_podglad.src = "https://view.officeapps.live.com/op/embed.aspx?src=" + full_file_path;
-            let paragraph_error_message = document.createElement("p")
-            paragraph_error_message.innerText = "Ta przeglądarka nie obsługuje podglądu, możesz dalej pobać plik.";
-            iframe_podglad.appendChild(paragraph_error_message);
-            document.getElementsByTagName("section")[0].appendChild(iframe_podglad);
-        }
-        else if (filetype == "image")
-        {
-            // Tworzy obrazek i wyswietla go
-            let image_podglad = document.createElement("img");
-            image_podglad.src = full_file_path;
-            image_podglad.alt = filename;
-            image_podglad.id = "podglad_img";
-            document.getElementsByTagName("section")[0].appendChild(image_podglad);
-        } 
-        else if (filetype == "video")
-        {
-            // Tworzy ramke wideo i wyswietla ją
-            /*
-            <video width="320" height="240" controls>
-            <source src="movie.mp4" type="video/mp4">
-            <source src="movie.ogg" type="video/ogg">
-            Your browser does not support the video tag.
-            </video>
-            */
-            let video_podglad = document.createElement("video");
-            let video_source = document.createElement("source");
-            video_source.src = full_file_path;
-            video_podglad.controls = true;
-            video_podglad.id = "podglad_video";
-            video_podglad.innerText = "Twoja przegladarka nie obsługuje odtwarzania tego filmu, możesz go dalej pobrać";
-            video_podglad.appendChild(video_source);
-            document.getElementsByTagName("section")[0].appendChild(video_podglad);
-        }
-        else if (filetype == "audio")
-        {
-            // Tworzy kontrolkę audio i wyswietla ją
-            /*
-            <audio controls>
-            <source src="horse.ogg" type="audio/ogg">
-            <source src="horse.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-            </audio>
-            */
-            let audio_podglad = document.createElement("audio");
-            let audio_source = document.createElement("source");
-            audio_source.src = full_file_path;
-            audio_podglad.controls = true;
-            audio_podglad.id = "podglad_audio";
-            audio_podglad.innerText = "Twoja przegladarka nie obsługuje odtwarzania pliku audio, możesz go dalej pobrać";
-            audio_podglad.appendChild(audio_source);
-            document.getElementsByTagName("section")[0].appendChild(audio_podglad);
-        }
-        else if (filetype == "not_viewable")
-        {
-            // error message nie ma pliku
-            let info_text = document.createElement("span");
-            info_text.id = "podglad_raw";
-            info_text.style.color = "#151515";
-            info_text.style.fontSize = "x-large"
-            info_text.innerText = "Nie można wyświetlić podglądu dla pliku: " + filename + ", możesz go dalej pobrać"
-            document.getElementsByTagName("section")[0].appendChild(info_text);
-        }
-        else if (filetype == "raw")
-        { // Tworzymiejsce na surowe dane i wyswietla je
-            let raw_podglad = document.createElement("xmp");
-            fetch(full_file_path)
-            .then(response => {
-                if(response.ok)
-                {
-                    raw_podglad.innerText = response.text()
-                }
-                else 
-                {    
-                    disableDownloadAndCopyButtons();
-                }
-            })
-            .catch(error => {
-                console.log("error", error);
-            });
-            document.getElementsByTagName("html")[0].style.overflow = "auto";
-            document.getElementsByTagName("section")[0].style.overflow = "auto";
-            raw_podglad.id = "podglad_raw";
-            document.getElementsByTagName("section")[0].appendChild(raw_podglad);
         }
         else 
         {
-            // error message nie ma pliku
-            let error_text = document.createElement("span");
-            error_text.id = "podglad_raw";
-            error_text.style.color = "#d21212";
-            error_text.style.fontSize = "x-large"
-            error_text.innerText = "Plik ''" + filename + "'' nie istnieje, lub nie jest dostępny."
-            document.getElementsByTagName("section")[0].appendChild(error_text);
-            disableDownloadAndCopyButtons();
-        }
-        document.getElementById("download-link").href = "/public/" + filename;
-        document.getElementById("download-link").download =  filename;
-        document.getElementById("copy-btn").addEventListener("click", showCopiedNotify);
-        if (document.addEventListener) 
-        {
+            if (s == "office")
+            { 
+                let _a = document.createElement("iframe"), _b = document.createElement("p");
+                _a.frameBorder = "no";
+                _a.id = "m";
+                _a.src = "https://view.officeapps.live.com/op/embed.aspx?src=" + t;
+                _b.innerText = "Ta przeglądarka nie obsługuje podglądu, możesz dalej pobać plik.";
+                _a.appendChild(_b);
+                document.getElementsByTagName("section")[0].appendChild(_a);
+            }
+            else if (s == "image")
+            {
+                let _a = document.createElement("img");
+                _a.src = t;
+                _a.alt = r;
+                _a.id = "i";
+                document.getElementsByTagName("section")[0].appendChild(_a);
+            } 
+            else if (s == "video")
+            {
+                let _a = document.createElement("video"), _b = document.createElement("source");
+                _b.src = t;
+                _a.controls = true;
+                _a.id = "j";
+                _a.innerText = "Twoja przegladarka nie obsługuje odtwarzania tego filmu, możesz go dalej pobrać";
+                _a.appendChild(_b);
+                document.getElementsByTagName("section")[0].appendChild(_a);
+            }
+            else if (s == "audio")
+            {
+                let _a = document.createElement("audio"), _b = document.createElement("source");
+                _b.src = t;
+                _a.controls = true;
+                _a.id = "k";
+                _a.innerText = "Twoja przegladarka nie obsługuje odtwarzania pliku audio, możesz go dalej pobrać";
+                _a.appendChild(_b);
+                document.getElementsByTagName("section")[0].appendChild(_a);
+            }
+            else if (s == "not_viewable")
+            {
+                let _a = document.createElement("span");
+                _a.id = "l";
+                _a.style.color = "#151515";
+                _a.style.fontSize = "x-large"
+                _a.innerText = "Nie można wyświetlić podglądu dla pliku: " + r + ", możesz go dalej pobrać"
+                document.getElementsByTagName("section")[0].appendChild(_a);
+            }
+            else if (s == "raw")
+            {
+                let _a = document.createElement("xmp");
+                fetch(t)
+                .then(response => {
+                    if(response.ok)
+                        _a.innerText = response.text()
+                    else 
+                        n();
+                })
+                .catch(error => {
+                    console.log("error", error);
+                });
+                document.getElementsByTagName("html")[0].style.overflow = "auto";
+                document.getElementsByTagName("section")[0].style.overflow = "auto";
+                _a.id = "l";
+                document.getElementsByTagName("section")[0].appendChild(_a);
+            }
+            else if (s == "pdf")
+            {
+                document.getElementsByTagName("section")[0].innerHTML = "<object id='m' data='"+t+"' type='application/pdf'>  <embed src='"+t+"'' type='application/pdf'/> </object>";
+            }
+            else 
+            {
+                let _a = document.createElement("span");
+                _a.id = "l";
+                _a.style.color = "#d21212";
+                _a.style.fontSize = "x-large"
+                _a.innerText = "Plik ''" + r + "'' nie istnieje, lub nie jest dostępny."
+                document.getElementsByTagName("section")[0].appendChild(_a);
+                n();
+            }
+            document.getElementById("d").href = "/public/" + r;
+            document.getElementById("d").download =  r;
+            document.getElementById("b").addEventListener("click", u);
             document.addEventListener('contextmenu', (e) => {
                 if (document.elementsFromPoint(e.pageX, e.pageY)[1].nodeName == "SECTION")
-                {
-                    showCopiedNotify();
-                }
+                    u();
                 e.preventDefault();
             }, false);
-        } else 
-        {
-        document.attachEvent('oncontextmenu', () => {
-            showCopiedNotify();
-            window.event.returnValue = false;
-        });
         }
+        window.onresize = l;
+        l();
     }
-}
-
-
-    console.log("Plik = ", filename);
-    console.log("Typ wyświetlania = ", filetype);
-    console.log("Rozszerzenie = ", filename.split(".").pop().toLowerCase());
    </script>
    <style>
-
     :root {
-        --main-color: cornflowerblue;
-        --button-color: rgb(45, 82, 151);
-        --accent-color: rgb(27, 51, 95);
+        --a: rgb(100,149,237);
+        --b: rgb(45, 82, 151);
+        --c: rgb(27, 51, 95);
     }
-    #podglad_office {
+    #m {
         width:100%;
-        height:97%;
+        height:100%;
     }
     body, html, section {
         height: 100%;
         margin:0px;
         overflow: hidden;
     }
-    #podglad_img, #podglad_audio, #podglad_video, #podglad_raw {
+    #i, #k, #j, #l {
         max-width: 100%;
         max-height: 70%;
         margin: 0;
@@ -433,13 +309,13 @@
         margin-right: -50%;
         transform: translate(-50%, -50%);
     }
-    #podglad_raw {
+    #l {
         padding: 3%;
         margin: 3%;
         margin-top: 8%;
     }
-    #header {
-        background-color: var(--main-color);
+    #e {
+        background-color: var(--a);
         padding: 10px;
         display: flex;
         flex-wrap: nowrap;
@@ -447,13 +323,13 @@
         justify-content: space-between;
     }
 
-    .div-inline {
+    .c {
         padding-right: 30px;
     }
-    #download-btn, #copy-btn {
+    #a, #b {
         font-size: larger;
         font-family: 'Lato', sans-serif;
-        background-color: var(--button-color);
+        background-color: var(--b);
         width:max-content;
         color:white;
         font-weight:bolder;
@@ -462,17 +338,17 @@
         border-radius: 20px;
         cursor: pointer;
     }
-    #download-btn:hover, #copy-btn:hover {
-        background-color: var(--accent-color);
+    #a:hover, #b:hover {
+        background-color: var(--c);
     }
     a {
         text-decoration:none;
     }
-    #notify {
+    #f {
         position:fixed;
         top:1%;
         left:70%;
-        background-color: var(--accent-color);
+        background-color: var(--c);
         opacity: 0;
         color: white;
         padding: 2%;
@@ -481,15 +357,15 @@
         font-family: 'Lato', sans-serif;
         font-weight: bolder;
     }
-    .icon {
+    .p {
         max-height:  64px;
         max-width: auto;
     }
-    .fileicon{
+    .n{
         max-width:80%;
         height:auto;
     }
-    .filename{
+    .o{
         font-size: large;
         font-family: 'Lato', sans-serif;
         font-weight:bolder;
@@ -498,17 +374,17 @@
         color:black;
         word-wrap: break-word;
     }
-    .element {
+    .g {
         margin:6%;
         display:flex;
         flex-direction:column;
         align-items:center;
         padding-top:7%;
     }
-    .element:hover {
-        box-shadow: 0 0 5px 3px var(--main-color);
+    .g:hover {
+        box-shadow: 0 0 5px 3px var(--a);
     }
-    #text {
+    #r {
         font-size: xx-large;
         font-family: 'Lato', sans-serif;
         width:max-content;
@@ -519,20 +395,20 @@
     }
    </style>
 </head>
-<body onload="load()">
+<body onload="q()">
     <header>
-        <div id="notify">
+        <div id="f">
             Link skopiowany :)
         </div>
-        <div id="header">
-            <div class="div-inline">
-                <a id="download-link" href="placeholder" title="Pobierz plik na urządzenie" download="">
-                    <div id="download-btn">
+        <div id="e">
+            <div class="c">
+                <a id="d" title="Pobierz plik na urządzenie" download="">
+                    <div id="a">
                     </div>
                 </a>
             </div>
-            <div class="div-inline">
-                <div id="copy-btn" title="Skopiuj link do schowka">
+            <div class="c">
+                <div id="b" title="Skopiuj link do schowka">
                 </div>
             </div>
         </div>
@@ -544,4 +420,3 @@
     ?>
 </body>
 </html>
-
