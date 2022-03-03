@@ -64,6 +64,7 @@ function l() {
  {
  navigator.clipboard.writeText(window.location);
  w(document.getElementById("f"));
+ document.getElementById("f").style.zIndex = 2;
  document.getElementById("f").animate([
  { opacity: "0.0" },
  { opacity: "1.0" }
@@ -91,6 +92,7 @@ function l() {
  setTimeout(() => {
  document.getElementById("f").style.transform = "translateY(0px)";
  document.getElementById("f").style.opacity = "0.0";
+ document.getElementById("f").style.zIndex = -1;
  }, 990);
  }, 1000);
  }
@@ -345,6 +347,7 @@ function l() {
  text-decoration:none;
  }
  #f {
+z-index: -1;
  position:fixed;
  top:1%;
  left:70%;
