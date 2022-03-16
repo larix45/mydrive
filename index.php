@@ -19,7 +19,7 @@
             }
             else 
             {
-                document.getElementById("upload-btn").innerHTML = "<imgsrc='./mydrive-icons/icons/download.png'  class='icon v_fliped'>";
+                document.getElementById("upload-btn").innerHTML = "<img src='./mydrive-icons/icons/download.png'  class='icon v_fliped'>";
             }
             let columns = "";
             for(let i =1; i < parseInt(window.innerWidth/100)+1; i++)
@@ -581,7 +581,7 @@
         max-width: auto;
     }
     .v_fliped{
-        transform: rotateY(180);
+        transform: scaleY(-1);
     }
     .fileicon{
         max-width:80%;
@@ -705,7 +705,7 @@
     echo "<input type='hidden' id='dirs' value='".json_encode(array_values(glob("public" . "/*" , GLOB_ONLYDIR)))."'>";
     //print_r(glob('public' . '/*' , GLOB_ONLYDIR));
     ?>
-    <input id='fileupload' type='file'>
+    <input id='fileupload' type='file' hidden>
     
     <div id='login'>        
         <h4>Hasło:</h4>
