@@ -18,30 +18,30 @@
         {
             if(window.innerHeight < window.innerWidth)
             {
-                document.getElementById("upload-btn").innerHTML = " ZALOGUJ";
+                upload_btn.innerHTML = " ZALOGUJ";
             }
             else 
             {
-                document.getElementById("upload-btn").innerHTML = "<img src='./mydrive-icons/icons/download.png'  class='icon v_fliped'>";
+                upload_btn.innerHTML = "<img src='./res/download.png'  class='icon v_fliped'>";
             }
             let columns = "";
             for(let i =1; i < parseInt(window.innerWidth/100)+1; i++)
             {
                 columns += (100/parseInt(window.innerWidth/100))+"% ";
             }
-            document.getElementsByTagName("section")[0].style.gridTemplateColumns = columns;
+            section.style.gridTemplateColumns = columns;
         }
         else
         {
             if(window.innerHeight < window.innerWidth)
             {
-                document.getElementById("download-btn").innerHTML = " POBIERZ PLIK";
-                document.getElementById("copy-btn").innerHTML = "KOPIUJ LINK";
+                download_btn.innerHTML = "POBIERZ PLIK";
+                copy_btn.innerHTML = "KOPIUJ LINK";
             }
             else 
             {
-                document.getElementById("download-btn").innerHTML = "<img src='./mydrive-icons/icons/download.png'  class='icon'>";
-                document.getElementById("copy-btn").innerHTML = "<img src='./mydrive-icons/icons/copy.png'  class='icon'>";
+                download_btn.innerHTML = "<img src='./res/download.png'  class='icon'>";
+                copy_btn.innerHTML = "<img src='./res/copy.png'  class='icon'>";
             }
         }
     }
@@ -79,135 +79,113 @@
             if (!copyAndDownloadDisabled)
             {
                 navigator.clipboard.writeText(window.location);
-                document.getElementById("notify").style.zIndex = 2;
-                unfade(document.getElementById("notify"));
-                document.getElementById("notify").animate([
-                // keyframes
+                notify.style.zIndex = 2;
+                unfade(notify);
+                notify.animate([
                 { opacity: "0.0" },
                 { opacity: "1.0" }
                 ], {
-                // timing options
                 duration: 500,
                 iterations: 1
                 });
 
                 setTimeout(() => {
-                    document.getElementById("notify").animate([
-                    // keyframes
+                    notify.animate([
                     { opacity: "1.0" },
                     { opacity: "0.0" }
                     ], {
-                    // timing options
                     duration: 1000,
                     iterations: 1
                     });
 
-                    document.getElementById("notify").animate([
-                    // keyframes
+                    notify.animate([
                     { transform: 'translateY(0px)' },
                     { transform: 'translateY(-100px)' }
                     ], {
-                    // timing options
                     duration: 1000,
                     iterations: 1
                     });
                     setTimeout(() => {
-                        document.getElementById("notify").style.transform = "translateY(0px)";
-                        document.getElementById("notify").style.opacity = "0.0";
-                        document.getElementById("notify").style.zIndex = -1;
+                        notify.style.transform = "translateY(0px)";
+                        notify.style.opacity = "0.0";
+                        notify.style.zIndex = -1;
                     }, 990);
                 }, 1000);
             }
         }
     function disableDownloadAndCopyButtons() {
             copyAndDownloadDisabled = true;
-            /*
-            <div id="downlaod-btn">
-                POBIERZ PLIK
-            </div>
-
-            remove download link and restore the button itself
-            */
-            let _parent_div_buffor = document.getElementById("download-link").parentElement
+            let _parent_div_buffor = download_link.parentElement
             _parent_div_buffor.childNodes[1].remove()
             let _buffor_dir = document.createElement("div");
-            _buffor_dir.id = "download-btn";
-            _buffor_dir.innerText = "POBIERZ PLIK"
-            _parent_div_buffor.appendChild(_buffor_dir)
+            _buffor_dir.id = "download_btn";
+            _buffor_dir.innerText = "POBIERZ PLIK";
+            _parent_div_buffor.appendChild(_buffor_dir);
 
 
-            document.getElementById("download-btn").style.backgroundColor = "#464a52";
-            document.getElementById("copy-btn").style.backgroundColor = "#464a52";
+            download_btn.style.backgroundColor = "#464a52";
+            copy_btn.style.backgroundColor = "#464a52";
 
-            document.getElementById("download-btn").style.color = "#d6d6d6";
-            document.getElementById("copy-btn").style.color = "#d6d6d6";
+            download_btn.style.color = "#d6d6d6";
+            copy_btn.style.color = "#d6d6d6";
 
-            document.getElementById("download-btn").style.textDecoration = "line-through";
-            document.getElementById("copy-btn").style.textDecoration = "line-through";
+            download_btn.style.textDecoration = "line-through";
+            copy_btn.style.textDecoration = "line-through";
 
-            document.getElementById("download-btn").style.cursor = "not-allowed";
-            document.getElementById("copy-btn").style.cursor = "not-allowed";
+            download_btn.style.cursor = "not-allowed";
+            copy_btn.style.cursor = "not-allowed";
         }
         function upload()
         { 
-            /*
-            document.getElementsByTagName("body")[0].innerHTML = document.getElementsByTagName("body")[0].innerHTML + "<input id='fileupload' type='file'>";            
-            document.getElementsByTagName("body")[0].innerHTML += "<div id='login'>        <h4>Hasło:</h4>        <input type='password' id='password'>        <input type='button' id='login-btn' value='Zaloguj i prześlij pliki'>    </div>";
-            document.getElementsByTagName("body")[0].innerHTML += "<div id='backdrop'> </div>";
-            */
-            document.getElementById("backdrop").style.display = "block";
-            document.getElementById("login").style.display = "flex";
-            document.getElementsByTagName("header")[0].style.filter = "blur(5px)";
-            document.getElementsByTagName("section")[0].style.filter = "blur(5px)";
-            document.getElementById("backdrop").onclick = () =>
+            backdrop.style.display = "block";
+            login.style.display = "flex";
+            outer_header.style.filter = "blur(5px)";
+            section.style.filter = "blur(5px)";
+            backdrop.onclick = () =>
             {
-                document.getElementsByTagName("header")[0].style.filter = "blur(0px)";
-                document.getElementsByTagName("section")[0].style.filter = "blur(0px)";
-                document.getElementById("backdrop").style.display = "none";
-                document.getElementById("login").style.display = "none";
+                outer_header.style.filter = "blur(0px)";
+                section.style.filter = "blur(0px)";
+                backdrop.style.display = "none";
+                login.style.display = "none";
             };
-            document.getElementById("login-btn").onclick = () =>
+            login_btn.onclick = () =>
             {
-                document.getElementById('fileupload').onchange =  async () => 
+                fileupload.onchange =  async () => 
                 {
-                    let formData = new FormData();          
-                    console.log(document.getElementById('fileupload'  ).files[0]); 
-                    formData.append("uploadedFile", document.getElementById('fileupload').files[0]);
+                    let formData = new FormData();
+                    formData.append("uploadedFile", fileupload.files[0]);
                     
-                    formData.append("passpherese", document.getElementById("password").value);
-                    
+                    formData.append("passpherese", password.value);
+
                     await fetch('./upload.php', {
                         method: "POST", 
                         body: formData
                     })
                     .then((response) => {
-                        response.text().then((response) => {
-                            console.log(response);
-                        });
                         if (response.status == 200)
                         {
-                            document.getElementById("notify").innerText = "Plik przesłany";
+                            notify.innerText = "Plik przesłany";
                         }
                         else if (response.status == 300)
                         {
-                            document.getElementById("notify").innerText = "Niepoprawne hasło!";
+                            notify.innerText = "Niepoprawne hasło!";
                         }
                         else if (response.status == 100)
                         {
-                            document.getElementById("notify").innerText = "Tego pliku nie wolno przesyłac!";
+                            notify.innerText = "Tego pliku nie wolno przesyłac!";
                         }
                         else 
                         {
-                            document.getElementById("notify").innerText = "Wystąpił problem!";
+                            notify.innerText = "Wystąpił problem!";
                         }
                      });
-                    document.getElementsByTagName("header")[0].style.filter = "blur(0px)";
-                    document.getElementsByTagName("section")[0].style.filter = "blur(0px)";
+                    outer_header.style.filter = "blur(0px)";
+                    section.style.filter = "blur(0px)";
                     showCopiedNotify();
-                    document.getElementById("backdrop").style.display = "none";
-                    document.getElementById("login").style.display = "none";
+                    backdrop.style.display = "none";
+                    login.style.display = "none";
                 }
-                document.getElementById('fileupload').click();
+                fileupload.click();
             }
         }
     
@@ -215,7 +193,7 @@
     <script>
     const filename = findGetParameter("filename");
     const full_file_path = encodeURI(server_adress + "/public/" + filename);
-    let filetype = "";// office or image or video or audio or raw_text
+    let filetype = "";
 
 
     var table_files_to_ignore= ["index.html"]; 
@@ -229,12 +207,12 @@
     var table_filetypes_icons = ["ico", "svg"];
     var table_filetypes_execuatbles = ["exe", "dll", "msi", "run", "inf"];
     window.onresize = rescaleAccordingToWindowSize;
-    document.getElementById("title").innerText = filename;
+    title.innerText = filename;
 
 
     if(filename == null)
     {
-        document.getElementById("title").innerText = "Wybierz plik";
+        title.innerText = "Wybierz plik";
     }
     else if (table_files_to_ignore.includes(filename))
     {
@@ -264,25 +242,23 @@
     {
         filetype = "pdf";
     }
-    else // RAW FILE 
+    else  
     {
         filetype = "raw"
     }
-    function load(){ // folder view
+    function load(){ 
         if(filename == null)
         {
-            document.getElementById("header").innerHTML = "<h1></h1> <h1 id='text'>Wybierz plik:</h1> <div class='div-inline'><div id='upload-btn' title='Skopiuj link do schowka'>PRZEŚLIJ PLIK</div></div> ";
-            document.getElementById("header").style.justifyContent = "space-around";
-            document.getElementsByTagName("section")[0].style.overflow = "auto";
-            document.getElementsByTagName("section")[0].style.display = "grid"
-            document.getElementsByTagName("section")[0].style.gridAutoRows = "25%";
-            document.getElementsByTagName("section")[0].style.padding = "1%";
-            document.getElementsByTagName("section")[0].style.marginTop = "100px";
-            document.getElementsByTagName("section")[0].style.height = document.getElementsByTagName('html')[0].offsetHeight - document.getElementsByTagName('header')[0].offsetHeight - (document.getElementsByTagName('section')[0].offsetHeight * 0.03) + "px";
-            document.getElementById("upload-btn").addEventListener("click", upload);
-            
-            //console.log(JSON.parse(document.getElementById("files").value));
-            arrayRemove( arrayRemove(JSON.parse(document.getElementById("files").value),"."), "..").forEach(element => {
+            header.innerHTML = "<h1></h1> <h1 id='text'>Wybierz plik:</h1> <div class='div_inline'><div id='upload_btn' title='Skopiuj link do schowka'>PRZEŚLIJ PLIK</div></div> ";
+            header.style.justifyContent = "space-around";
+            section.style.overflow = "auto";
+            section.style.display = "grid"
+            section.style.gridAutoRows = "25%";
+            section.style.padding = "1%";
+            section.style.marginTop = "100px";
+            section.style.height = document.getElementsByTagName('html')[0].offsetHeight - outer_header.offsetHeight - (document.getElementsByTagName('section')[0].offsetHeight * 0.03) + "px";
+            upload_btn.addEventListener("click", upload);
+            arrayRemove( arrayRemove(JSON.parse(files.value),"."), "..").forEach(element => {
                 let a_link = document.createElement("a");
                 a_link.href = server_adress+"?filename="+element;
                 let div_element = document.createElement("div");
@@ -292,52 +268,51 @@
 
                 let img_fileicon = document.createElement("img");
                 img_fileicon.classList.add("fileicon");
-                img_fileicon.src = "./mydrive-icons/icons/base.png";
+                img_fileicon.src = "./res/base.png";
                 if(table_filetypes_office_docs.includes(element.split(".").pop().toLowerCase()))
                 {
-                    img_fileicon.src = "./mydrive-icons/icons/word.png";
+                    img_fileicon.src = "./res/word.png";
                 }
                 else if(table_filetypes_office_sheets.includes(element.split(".").pop().toLowerCase()))
                 {
-                    img_fileicon.src = "./mydrive-icons/icons/excel.png";
+                    img_fileicon.src = "./res/excel.png";
                 }
                 else if(table_filetypes_office_slides.includes(element.split(".").pop().toLowerCase()))
                 {
-                    img_fileicon.src = "./mydrive-icons/icons/powerpoint.png";
+                    img_fileicon.src = "./res/powerpoint.png";
                 }
                 else if(table_filetypes_image.includes(element.split(".").pop().toLowerCase()))
                 {
-                    img_fileicon.src = "./mydrive-icons/icons/image.png";
+                    img_fileicon.src = "./res/image.png";
                 }
                 else if(table_filetypes_video.includes(element.split(".").pop().toLowerCase()))
                 {
-                    img_fileicon.src = "./mydrive-icons/icons/video.png";
+                    img_fileicon.src = "./res/video.png";
                 }
                 else if(table_filetypes_audio.includes(element.split(".").pop().toLowerCase()))
                 {
-                    img_fileicon.src = "./mydrive-icons/icons/music.png";
+                    img_fileicon.src = "./res/music.png";
                 }
                 else if(table_filetypes_text.includes(element.split(".").pop().toLowerCase()))
                 {
-                    img_fileicon.src = "./mydrive-icons/icons/text.png";
+                    img_fileicon.src = "./res/text.png";
                 }
                 else if(table_filetypes_icons.includes(element.split(".").pop().toLowerCase()))
                 {
-                    img_fileicon.src = "./mydrive-icons/icons/svg.png";
+                    img_fileicon.src = "./res/svg.png";
                 }
                 else if(table_filetypes_execuatbles.includes(element.split(".").pop().toLowerCase()))
                 {
-                    img_fileicon.src = "./mydrive-icons/icons/exec.png";
+                    img_fileicon.src = "./res/exec.png";
                 }
                 else if("pdf" == element.split(".").pop().toLowerCase())
                 {
-                    img_fileicon.src = "./mydrive-icons/icons/pdf.png";
+                    img_fileicon.src = "./res/pdf.png";
                 } 
                 if(!element)
                 {
-                    console.log(element);
 
-                    img_fileicon.src = "./mydrive-icons/icons/directory.png";
+                    img_fileicon.src = "./res/directory.png";
                 }
 
                 let span_filename = document.createElement("span");
@@ -349,14 +324,12 @@
                 div_element.appendChild(span_filename);
 
                 a_link.appendChild(div_element);
-                console.log(element);
-                document.getElementsByTagName("section")[0].appendChild(a_link);
+                section.appendChild(a_link);
             });
         }
         else {
         if (filetype == "office")
         { 
-            // Tworzy ramkę, z odniesieniem do ms office online i wyswietla je jako iframe
             let iframe_podglad = document.createElement("iframe");
             iframe_podglad.frameBorder = "no";
             iframe_podglad.id = "podglad_office";
@@ -364,27 +337,18 @@
             let paragraph_error_message = document.createElement("p")
             paragraph_error_message.innerText = "Ta przeglądarka nie obsługuje podglądu, możesz dalej pobać plik.";
             iframe_podglad.appendChild(paragraph_error_message);
-            document.getElementsByTagName("section")[0].appendChild(iframe_podglad);
+            section.appendChild(iframe_podglad);
         }
         else if (filetype == "image")
         {
-            // Tworzy obrazek i wyswietla go
             let image_podglad = document.createElement("img");
             image_podglad.src = full_file_path;
             image_podglad.alt = filename;
             image_podglad.id = "podglad_img";
-            document.getElementsByTagName("section")[0].appendChild(image_podglad);
+            section.appendChild(image_podglad);
         } 
         else if (filetype == "video")
         {
-            // Tworzy ramke wideo i wyswietla ją
-            /*
-            <video width="320" height="240" controls>
-            <source src="movie.mp4" type="video/mp4">
-            <source src="movie.ogg" type="video/ogg">
-            Your browser does not support the video tag.
-            </video>
-            */
             let video_podglad = document.createElement("video");
             let video_source = document.createElement("source");
             video_source.src = full_file_path;
@@ -392,18 +356,10 @@
             video_podglad.id = "podglad_video";
             video_podglad.innerText = "Twoja przegladarka nie obsługuje odtwarzania tego filmu, możesz go dalej pobrać";
             video_podglad.appendChild(video_source);
-            document.getElementsByTagName("section")[0].appendChild(video_podglad);
+            section.appendChild(video_podglad);
         }
         else if (filetype == "audio")
         {
-            // Tworzy kontrolkę audio i wyswietla ją
-            /*
-            <audio controls>
-            <source src="horse.ogg" type="audio/ogg">
-            <source src="horse.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-            </audio>
-            */
             let audio_podglad = document.createElement("audio");
             let audio_source = document.createElement("source");
             audio_source.src = full_file_path;
@@ -411,20 +367,19 @@
             audio_podglad.id = "podglad_audio";
             audio_podglad.innerText = "Twoja przegladarka nie obsługuje odtwarzania pliku audio, możesz go dalej pobrać";
             audio_podglad.appendChild(audio_source);
-            document.getElementsByTagName("section")[0].appendChild(audio_podglad);
+            section.appendChild(audio_podglad);
         }
         else if (filetype == "not_viewable")
         {
-            // error message nie ma pliku
             let info_text = document.createElement("span");
             info_text.id = "podglad_raw";
             info_text.style.color = "#151515";
             info_text.style.fontSize = "x-large"
             info_text.innerText = "Nie można wyświetlić podglądu dla pliku: " + filename + ", możesz go dalej pobrać"
-            document.getElementsByTagName("section")[0].appendChild(info_text);
+            section.appendChild(info_text);
         }
         else if (filetype == "raw")
-        { // Tworzymiejsce na surowe dane i wyswietla je
+        {
             let raw_podglad = document.createElement("xmp");
             fetch(full_file_path)
             .then(response => {
@@ -440,32 +395,31 @@
                 }
             })
             .catch(error => {
-                console.log("error", error);
+                alert("Błąd: "+ error);
             });
             document.getElementsByTagName("html")[0].style.overflow = "auto";
-            document.getElementsByTagName("section")[0].style.overflow = "auto";
+            section.style.overflow = "auto";
             raw_podglad.id = "podglad_raw";
-            document.getElementsByTagName("section")[0].appendChild(raw_podglad);
+            section.appendChild(raw_podglad);
         }
         else if (filetype == "pdf")
         {
-            document.getElementsByTagName("section")[0].innerHTML = "<object id='podglad_office' data='"+full_file_path+"' type='application/pdf'>  <embed src='"+full_file_path+"'' type='application/pdf'/> </object>";
-            document.getElementById('podglad_office').style.height = document.getElementsByTagName('html')[0].offsetHeight - document.getElementsByTagName('header')[0].offsetHeight + "px";
+            section.innerHTML = "<object id='podglad_office' data='"+full_file_path+"' type='application/pdf'>  <embed src='"+full_file_path+"'' type='application/pdf'/> </object>";
+            podglad_office.style.height = document.getElementsByTagName('html')[0].offsetHeight - outer_header.offsetHeight + "px";
         }
         else 
         {
-            // error message nie ma pliku
             let error_text = document.createElement("span");
             error_text.id = "podglad_raw";
             error_text.style.color = "#d21212";
             error_text.style.fontSize = "x-large"
             error_text.innerText = "Plik ''" + filename + "'' nie istnieje, lub nie jest dostępny."
-            document.getElementsByTagName("section")[0].appendChild(error_text);
+            section.appendChild(error_text);
             disableDownloadAndCopyButtons();
         }
-        document.getElementById("download-link").href = "/public/" + filename;
-        document.getElementById("download-link").download =  filename;
-        document.getElementById("copy-btn").addEventListener("click", showCopiedNotify);
+        download_link.href = "/public/" + filename;
+        download_link.download =  filename;
+        copy_btn.addEventListener("click", showCopiedNotify);
         if (document.addEventListener) 
         {
             document.addEventListener('contextmenu', (e) => {
@@ -485,11 +439,6 @@
     }
     rescaleAccordingToWindowSize();
 }
-
-
-    console.log("Plik = ", filename);
-    console.log("Typ wyświetlania = ", filetype);
-    console.log("Rozszerzenie = ", filename.split(".").pop().toLowerCase());
    </script>
    <style>
 
@@ -534,10 +483,10 @@
         width: 100%;
     }
 
-    .div-inline {
+    .div_inline {
         padding-right: 30px;
     }
-    #download-btn, #copy-btn, #upload-btn {
+    #download_btn, #copy_btn, #upload_btn {
         font-size: larger;
         font-family: 'Lato', sans-serif;
         background-color: var(--button-color);
@@ -550,7 +499,7 @@
         cursor: pointer;
         margin-right: 15px;
     }
-    #download-btn:hover, #copy-btn:hover, #upload-btn:hover {
+    #download_btn:hover, #copy_btn:hover, #upload_btn:hover {
         background-color: var(--accent-color);
     }
     a {
@@ -626,7 +575,7 @@
         transform: translate(-50%,  -50%);
         z-index: 10;
     }
-    #login-btn,#password {
+    #login_btn,#password {
         
         font-size: larger;
         font-family: 'Lato', sans-serif;
@@ -643,7 +592,7 @@
         width:100%;
         
     }
-    #login-btn:hover {
+    #login_btn:hover {
         background-color: var(--accent-color);
     }
     h4{
@@ -675,37 +624,37 @@
    </style>
 </head>
 <body onload="load()">
-    <header>
+    <header id="outer_header">
         <div id="notify">
             Link skopiowany :)
         </div>
         <div id="header">
-            <div class="div-inline">
-                <a id="download-link" href="placeholder" title="Pobierz plik na urządzenie" download="">
-                    <div id="download-btn">
+            <div class="div_inline">
+                <a id="download_link" href="placeholder" title="Pobierz plik na urządzenie" download="">
+                    <div id="download_btn">
                     </div>
                 </a>
             </div>
-            <div class="div-inline">
-                <div id="copy-btn" title="Skopiuj link do schowka">
+            <div class="div_inline">
+                <div id="copy_btn" title="Skopiuj link do schowka">
                 </div>
             </div>
         </div>
     </header>
-    <section>
+    <section id="section">
     </section>
     <?php
     echo "<input type='hidden' id='files' value='".json_encode(array_values(scandir("./public")))."'>";
     echo "<input type='hidden' id='dirs' value='".json_encode(array_values(glob("public" . "/*" , GLOB_ONLYDIR)))."'>";
     ?>
-    <input id='fileupload' type='file' hidden>
+    <input id="fileupload" type="file" hidden>
     
-    <div id='login'>        
+    <div id="login">        
         <h4>Hasło:</h4>
-        <input type='password' id='password'>  
-        <input type='button' id='login-btn' value='Zaloguj i prześlij pliki'>
+        <input type="password" id="password">  
+        <input type="button" id="login_btn" value="Zaloguj i prześlij pliki">
     </div>
-    <div id='backdrop'>
+    <div id="backdrop">
      </div>
 </body>
 </html>
