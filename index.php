@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
     <script>
+    //const server_adress = "http://152.70.55.33/";
+    const server_adress = "http://localhost/";
+
     var copyAndDownloadDisabled = false;
     function rescaleAccordingToWindowSize() {
         if(filename == null)
@@ -50,7 +53,7 @@
     function unfade(element) {
         let op = 0.2;  
         element.style.display = 'block';
-        var timer = setInterval(function () {
+        let timer = setInterval(function () {
             if (op >= 1){
                 clearInterval(timer);
             }
@@ -60,7 +63,7 @@
         }, 10);
     }
     function findGetParameter(parameterName) {
-            var result = null,
+            let result = null,
                 tmp = [];
             location.search
                 .substr(1)
@@ -210,21 +213,21 @@
     
     </script>
     <script>
-    //const server_adress = "http://152.70.55.33/";
-    const server_adress = "http://localhost/";
     const filename = findGetParameter("filename");
     const full_file_path = encodeURI(server_adress + "/public/" + filename);
     let filetype = "";// office or image or video or audio or raw_text
 
 
     var table_files_to_ignore= ["index.html"]; 
-
-    /*PDF), PowerPoint (POTM, POTX, PPSM, PPSX, PPT, PPTM, PPTX), Rich Text (RTF), Word (DOC, DOCM, DOCX, DOTM, DOTX*/
-    var table_filetypes_office = ["docx","doc", "docm", "xlsx", "xls", "xlsm", "pptx","ppt", "pptm", "pps", "ppsx", "rtf"];
-    var table_filetypes_image = ["png", "apng",  "jpg", "jpeg", "gif", "svg", "webp", "bmp", "ico"];
+    var table_filetypes_office_docs = ["docx","doc", "docm", "rtf"];
+    var table_filetypes_office_sheets = ["xlsx", "xls", "xlsm"];
+    var table_filetypes_office_slides = ["pptx","ppt", "pptm", "pps", "ppsx"];
+    var table_filetypes_image = ["png", "apng",  "jpg", "jpeg", "gif", "webp", "bmp"];
     var table_filetypes_video = ["ogg", "webm", "mp4"];
     var table_filetypes_audio = ["mp3", "wav"];
-    var table_filetypes_not_viewable = ["exe", "dll", "msi", "run", "inf", "bin", "iso", "img"];
+    var table_filetypes_text = ["txt","md", "rtf", "csv"];
+    var table_filetypes_icons = ["ico", "svg"];
+    var table_filetypes_execuatbles = ["exe", "dll", "msi", "run", "inf"];
     window.onresize = rescaleAccordingToWindowSize;
     document.getElementById("title").innerText = filename;
 
@@ -236,11 +239,11 @@
     {
         filetype = "nonexistant";
     }
-    else if (table_filetypes_office.includes(filename.split(".").pop().toLowerCase()))
+    else if (table_filetypes_office_docs.concat(table_filetypes_office_sheets.concat(table_filetypes_office_slides)).includes(filename.split(".").pop().toLowerCase()))
     {
         filetype = "office";
     }
-    else if (table_filetypes_image.includes(filename.split(".").pop().toLowerCase()))
+    else if (table_filetypes_image.concat(table_filetypes_icons).includes(filename.split(".").pop().toLowerCase()))
     {
         filetype = "image";
     }
@@ -252,7 +255,7 @@
     {
         filetype = "audio";
     }
-    else if (table_filetypes_not_viewable.includes(filename.split(".").pop().toLowerCase()))
+    else if (table_filetypes_execuatbles.includes(filename.split(".").pop().toLowerCase()))
     {
         filetype = "not_viewable";
     }
@@ -282,17 +285,7 @@
                 let a_link = document.createElement("a");
                 a_link.href = server_adress+"?filename="+element;
                 let div_element = document.createElement("div");
-                div_element.classList.add("element");
-
-                var table_filetypes_office_docs = ["docx","doc", "docm"];
-                var table_filetypes_office_sheets = ["xlsx", "xls", "xlsm"];
-                var table_filetypes_office_slides = ["pptx","ppt", "pptm", "pps", "ppsx"];
-                var table_filetypes_image = ["png", "apng",  "jpg", "jpeg", "gif", "webp", "bmp"];
-                var table_filetypes_video = ["ogg", "webm", "mp4"];
-                var table_filetypes_audio = ["mp3", "wav"];
-                var table_filetypes_text = ["txt","md", "rtf", "csv"];
-                var table_filetypes_icons = ["ico", "svg"];
-                var table_filetypes_execuatbles = ["exe", "dll", "msi", "run", "inf"];
+                div_element.classList.add("element");   
                 
 
 
