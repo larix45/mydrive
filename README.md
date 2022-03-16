@@ -42,8 +42,8 @@ It is possible to change apperance by editing theese CSS variables
 Changing the name of folder with data can be done by replaceing lines 
 > const full_file_path = encodeURI(server_adress + **"/public/"** + filename);
 > download_link.href = **"/public/"** + filename;
->   echo "<input type='hidden' id='files' value='".json_encode(array_values(scandir(**"./public"**)))."'>";
->  echo "<input type='hidden' id='dirs' value='".json_encode(array_values(glob(**"public"** . "/*" , GLOB_ONLYDIR)))."'>"; 
+>   echo "\<input type='hidden' id='files' value='".json_encode(array_values(scandir(**"./public"**)))."'>";
+>  echo "\<input type='hidden' id='dirs' value='".json_encode(array_values(glob(**"public"** . "/*" , GLOB_ONLYDIR)))."'>"; 
 
 
 ## Usage
