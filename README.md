@@ -1,5 +1,5 @@
 # mydrive
-One file solution for sharing files publically on the public facing server.
+One file solution for sharing files publicly on the public facing server.
 
 ## Instalation
 ### Requirenments:
@@ -34,10 +34,6 @@ replacing *localhost* with your IPv4 and change to https if your server supports
 
 
 ## Configuration
-
-It is possible to change apperance by editing theese CSS variables
-
-...
 
 Changing the name of folder with data can be done by replaceing lines 
 > const full_file_path = encodeURI(server_adress + **"/public/"** + filename);
